@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>钟表</title>
+    <style>
+        body{
+            text-align:center;
+            padding:0;
+            margin:0;
+        }
+        #canvas{
+            background:#fff;
+        }
+        #canvas2{
+            background:#f00;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="800"></canvas>
+    <script>
+        window.onload=function(){
+            var canvas=document.getElementById("canvas");
+            var c1=canvas.getContext("2d");
+            c1.font="50px sans-serif";
+            function donghua(shi,fen,miao){
+                c1.clearRect(0,0,canvas.width,canvas.height);
+                c1.lineCap="round";
+                c1.fillStyle="#000";
+                c1.lineWidth=10;
+                c1.strokeStyle="#000";
+                c1.beginPath();
+                c1.moveTo(canvas.width/2+300,canvas.height/2);
+                c1.arc(canvas.width/2,canvas.height/2,300,0,2*Math.PI);
+                c1.fillStyle="#eee";
+                c1.fill();
+                c1.stroke()
+                c1.closePath()
+                c1.fillStyle="#000";
+                for(var i=1;i<13;i++){
+                    c1.shadowBlur=0;
+                    c1.save()
+                    c1.translate(canvas.width/2,canvas.height/2);
+                    c1.rotate(i/6*Math.PI);
+                    c1.translate(0,-260);
+                    c1.rotate(-i/6*Math.PI);
+                    c1.textBaseline="middle";
+                    c1.fillText(i,-c1.measureText(i).width/2,0);
+                    c1.restore()
+                }
+                c1.shadowBlur=10;
+                c1.shadowColor="black";
+                for(var i=3;i<6;i++){
+                    c1.save()
+                    c1.translate(canvas.width/2,canvas.height/2);
+                    if(i==3){
+                        c1.rotate((shi+(fen+miao/60)/60)/6*Math.PI);
+                        c1.strokeStyle="#000";
+                    }else if(i==4){
+                        c1.rotate((fen+miao/60)/30*Math.PI);
+                        c1.strokeStyle="#000";
+                    }else if(i==5){
+                        c1.rotate(miao/30*Math.PI);
+                        c1.strokeStyle="#f90";
+                    }
+                    c1.lineWidth=-6*i+40;
+                    c1.beginPath();
+                    c1.moveTo(0,0);
+                    c1.lineTo(0,-i*45);
+                    c1.stroke()
+                    c1.closePath()
+                    c1.restore()
+                }
+                c1.beginPath();
+                c1.moveTo(canvas.width/2+20,canvas.height/2);
+                c1.arc(canvas.width/2,canvas.height/2,20,0,2*Math.PI);
+                c1.fillStyle="#f90";
+                c1.fill()
+                c1.closePath()
+            }
+            function riqi(nian){
+                c1.shadowBlur=0;
+                c1.fillStyle="#000";
+                c1.fillText(nian,(canvas.width-c1.measureText(nian).width)/2,60)
+                c1.shadowBlur=10;
+            }
+            function xingqi(xing){
+                c1.shadowBlur=0;
+                c1.fillStyle="#000";
+                if(xing==0){
+                    xing="日";
+                }else if(xing==1){
+                    xing="一";
+                }else if(xing==2){
+                    xing="二";
+                }else if(xing==3){
+                    xing="三";
+                }else if(xing==4){
+                    xing="四";
+                }else if(xing==5){
+                    xing="五";
+                }else if(xing==6){
+                    xing="六";
+                }
+                var char=`星期${xing}`;
+                c1.fillText(char,(canvas.width-c1.measureText(char).width)/2,760)
+                c1.shadowBlur=10; 
+            }
+            setInterval(function(){
+                var date=new Date();
+                var shi=date.getHours();//      ---时
+                var fen=date.getMinutes();//    ---分
+                var miao=date.getSeconds();//   ---秒
+                var nian=date.toLocaleDateString();//---年月日
+                var xing=date.getDay();//       ---星期
+                donghua(shi,fen,miao);
+                riqi(nian);
+                xingqi(xing);
+            })
+        }
+    </script>
+</body>
+</html>

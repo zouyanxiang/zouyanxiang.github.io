@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3D方块</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            background:#000;
+        }
+        #d1{
+            position:fixed;
+            width:100%;
+            height:100%;
+            top:0;
+            left:0;
+            cursor:move;
+        }
+        #box{
+            width:200px;
+            height:200px;
+            margin:300px auto;
+            position:relative;
+            -webkit-transform-style:preserve-3d;
+            transform-style:preserve-3d;
+        }
+        #box div{
+            width:200px;
+            height:200px;
+            position:absolute;
+            text-align:center;
+            line-height:200px;
+            font-size:80px;
+            font-weight:bold;
+            color:rgba(255,255,255,0.4);
+            background:rgba(255,255,255,0.2);
+            box-sizing: border-box;
+            border:1px solid #fff;
+        }
+        #box div:nth-child(1){
+            -webkit-transform:rotateX(90deg)   translateZ(100px);
+            transform:rotateX(90deg)   translateZ(100px);
+        }
+        #box div:nth-child(2){
+            -webkit-transform:rotateX(270deg)  translateZ(100px);
+            transform:rotateX(270deg)  translateZ(100px);
+        }
+        #box div:nth-child(3){
+            -webkit-transform:rotateY(90deg) translateZ(100px);
+            transform:rotateY(90deg) translateZ(100px);
+        }
+        #box div:nth-child(4){
+            -webkit-transform:rotateY(270deg) translateZ(100px);
+            transform:rotateY(270deg) translateZ(100px);
+        }
+        #box div:nth-child(5){
+            -webkit-transform:translateZ(-100px);
+            transform:translateZ(-100px);
+        }
+        #box div:nth-child(6){
+            -webkit-transform: translateZ(100px);
+            transform: translateZ(100px);
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div>一</div>
+        <div>二</div>
+        <div>三</div>
+        <div>四</div>
+        <div>五</div>
+        <div>六</div>
+    </div>
+    <div id="d1"></div>
+    <script>
+        var d1=document.getElementById("d1");
+        var box=document.getElementById("box");
+        var runX=0,runY=0;
+        var arrXY,arrRun=[[17,23]],numRun=0;
+        var bool=0;
+        function run(){
+            box.style.webkitTransition='-webkit-transform 0s linear';  //设置立方体变换的属性、持续时间、动画类型
+            var x=0,y=0;
+            for(var i=0;i<arrRun.length;i++){
+                x+=arrRun[i][0];
+                y+=arrRun[i][1];
+            }
+            box.style.webkitTransform = "rotateX("+x+"deg) rotateY("+y+"deg)";    //变换效果（沿X轴和Y轴旋转
+        }
+        run();
+        d1.onmousedown=function(e){
+            arrXY=[e.offsetX,e.offsetY];
+            bool=1;
+            numRun++;
+        }
+        d1.onmousemove=function(e){
+            if(bool){
+                arrXY[2]=e.offsetX;
+                arrXY[3]=e.offsetY;
+                runY=(arrXY[0]-arrXY[2])/6;
+                runX=(arrXY[3]-arrXY[1])/6;
+                var arr=[runX,runY];
+                arrRun[numRun]=arr;
+                run();
+            }
+        }
+        d1.onmouseup=function(){
+            bool=0;
+            console.log(arrRun);
+        }
+    </script>
+</body>
+</html>

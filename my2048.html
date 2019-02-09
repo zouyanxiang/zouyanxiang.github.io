@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        html,body{
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        #canvas {
+            background: #bbada0;
+            margin:0 auto;
+        }
+
+        #fangxiang {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+
+        #fangxiang div {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            left: 50%;
+            background: #000;
+            color: #fff;
+            box-sizing: border-box;
+            border: 1px solid #fff;
+            line-height: 50px;
+        }
+
+        #left {
+            margin-left: -75px;
+            top: 50px;
+        }
+
+        #right {
+            margin-left: 25px;
+            top: 50px;
+        }
+
+        #top {
+            top: 0;
+            margin-left: -25px;
+        }
+
+        #bottom {
+            margin-left: -25px;
+            top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div>
+
+    </div> -->
+    <canvas id="canvas" width="450" height="450"></canvas>
+    <script>
+        window.onload = function () {
+            var rows = 4;//行数
+            var cols = 4;//列数
+            var size = 100;
+            var gameBox = [];
+            var gameColor = [//颜色
+                "#ccc0b3",
+                "#eee4da",
+                "#ede0c8",
+                "#f2b179",
+                "#f59563",
+                "#f67e5f",
+                "#f65e3b",
+                "#edcf72",
+                "#edcc61",
+                "#9c0",
+                "#33b5e5",
+                "#09c",
+                "#eee4da",
+                "#ede0c8",
+                "#f2b179"
+            ];
+            var canvas = document.getElementById("canvas");
+            var c1 = canvas.getContext("2d");
+            if (document.body.clientWidth < 1000) {//M端
+                size = document.body.clientWidth / 8;//方块大小
+
+                var firstX = 0, firstY = 0, endX = 0, endY = 0;//初始化坐标值
+                window.addEventListener("touchstart", function (e) {
+                    firstX = e.targetTouches[0].clientX;
+                    firstY = e.targetTouches[0].clientY;
+                })
+                window.addEventListener("touchend", function (e) {
+                    endX = e.changedTouches[0].clientX;
+                    endY = e.changedTouches[0].clientY;
+                    moveX = endX - firstX;//判断左右
+                    moveY = endY - firstY;//判断上下
+                    if (Math.abs(moveX) > 60 || Math.abs(moveY) > 60) {//判断是滑动，不是点击
+                        var ele = 0;
+                        if (Math.abs(moveX) > Math.abs(moveY)) {
+                            /*判断横向移动的距离和纵向移动的距离大小对比，判断是左右还是上下*/
+                            ele = moveX > 0 ? 39 : 37;
+                        } else {
+                            ele = moveY > 0 ? 40 : 38;
+                        }
+                        panduan(ele);
+                    }
+                })
+
+
+                // var fangxiang = document.getElementById("fangxiang");
+                // fangxiang.style.display = "block";
+                // var l = document.getElementById("left");
+                // var r = document.getElementById("right");
+                // var t = document.getElementById("top");
+                // var b = document.getElementById("bottom");
+                // l.onclick = function () {
+                //     panduan(37);
+                // };
+                // t.onclick = function () {
+                //     panduan(38);
+                // };
+                // r.onclick = function () {
+                //     panduan(39);
+                // };
+                // b.onclick = function () {
+                //     panduan(40);
+                // };
+            }
+
+            function col(num) {//num转化成下标
+                var colNum = 0;
+                for (; ;) {
+                    if (num == Math.pow(2, colNum)) {
+                        return colNum;
+                    };
+                    colNum++;
+                }
+            }
+            function panduan(num) {
+                var gameBoxLL = [];
+                for (var i = 0; i < rows; i++) {
+                    gameBoxLL[i] = [];
+                    for (var y = 0; y < cols; y++) {
+                        gameBoxLL[i][y] = gameBox[i][y];
+                    }
+                }
+                game(num);
+                if (num == 37 || num == 38 || num == 39 || num == 40) {
+                    var bool = false;
+                    for (var i = 0; i < rows; i++) {
+                        for (var y = 0; y < cols; y++) {
+                            if (gameBoxLL[i][y] != gameBox[i][y]) {
+                                bool = true;
+                            }
+                        }
+                    }
+                    if (bool) {
+                        randGenerateSquare();
+                        huihua();
+                    }
+                    //panduan();
+                }
+            }
+            function game(num) {
+                var gameBoxL = [];
+                for (var i = 0; i < rows; i++) {
+                    gameBoxL[i] = [];
+                    for (var y = 0; y < cols; y++) {
+                        if (gameBox[i][y]) {
+                            gameBoxL[i].push(gameBox[i][y]);
+                        }
+                    }
+                }
+
+                if (num == 37) {
+                    for (var i = 0; i < gameBoxL.length; i++) {
+                        for (var y = 0; y < gameBoxL[i].length; y++) {
+                            if (y < 3 && gameBoxL[i][y] == gameBoxL[i][y + 1]) {
+                                gameBoxL[i][y] *= 2;
+                                gameBoxL[i].splice(y + 1, 1);
+                            }
+                        }
+                    }
+                    gameBox = gameBoxL;
+                }
+                if (num == 38) {
+                    var gameBoxL = [];
+                    for (var y = 0; y < cols; y++) {
+                        gameBoxL[y] = [];
+                        for (var i = 0; i < rows; i++) {
+                            if (gameBox[i][y]) {
+                                gameBoxL[y].push(gameBox[i][y]);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < gameBoxL.length; i++) {
+                        for (var y = 0; y < gameBoxL[i].length; y++) {
+                            if (y < 3 && gameBoxL[i][y] == gameBoxL[i][y + 1]) {
+                                gameBoxL[i][y] *= 2;
+                                gameBoxL[i].splice(y + 1, 1);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < rows; i++) {
+                        for (var y = 0; y < cols; y++) {
+                            gameBox[i][y] = gameBoxL[y][i]
+                        }
+                    }
+                }
+                if (num == 39) {
+                    var gameBoxL = [];
+                    for (var i = 0; i < rows; i++) {
+                        gameBoxL[i] = [];
+                        for (var y = 0; y < cols; y++) {
+                            if (gameBox[i][y]) {
+                                gameBoxL[i].unshift(gameBox[i][y]);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < gameBoxL.length; i++) {
+                        for (var y = 0; y < gameBoxL[i].length; y++) {
+                            if (y < 3 && gameBoxL[i][y] == gameBoxL[i][y + 1]) {
+                                gameBoxL[i][y] *= 2;
+                                gameBoxL[i].splice(y + 1, 1);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < rows; i++) {
+                        for (var y = 0; y < cols; y++) {
+                            gameBox[i][y] = gameBoxL[i][3 - y]
+                        }
+                    }
+                }
+                if (num == 40) {
+                    var gameBoxL = [];
+                    for (var y = 0; y < cols; y++) {
+                        gameBoxL[y] = [];
+                        for (var i = 0; i < rows; i++) {
+                            if (gameBox[i][y]) {
+                                gameBoxL[y].unshift(gameBox[i][y]);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < gameBoxL.length; i++) {
+                        for (var y = 0; y < gameBoxL[i].length; y++) {
+                            if (y < 3 && gameBoxL[i][y] == gameBoxL[i][y + 1]) {
+                                gameBoxL[i][y] *= 2;
+                                gameBoxL[i].splice(y + 1, 1);
+                            }
+                        }
+                    }
+                    for (var i = 0; i < rows; i++) {
+                        for (var y = 0; y < cols; y++) {
+                            gameBox[i][y] = gameBoxL[y][3 - i]
+                        }
+                    }
+                }
+            }
+            document.onkeydown = function (e) {//监视键盘
+                panduan(e.keyCode);
+            }
+            function randGenerateSquare() {//随机出方块
+                for (; ;) {
+                    var randRow = Math.floor(Math.random() * rows);
+                    var randCol = Math.floor(Math.random() * cols);
+                    if (!gameBox[randRow][randCol]) {
+                        gameBox[randRow][randCol] = Math.random() > 0.5 ? 2 : 4;
+                        return true;
+                    }
+                }
+            }
+            function into() {
+                for (var i = 0; i < rows; i++) {
+                    gameBox[i] = [];
+                    for (var y = 0; y < cols; y++) {
+                        gameBox[i][y] = 0;
+                    }
+                }
+                randGenerateSquare();
+                randGenerateSquare();
+                huihua()
+                canvas.width = size * cols + (cols + 1) * size / 10;
+                canvas.height = size * rows + (rows + 1) * size / 10;
+            }
+            into();
+            function huihua() {//绘图
+                c1.clearRect(0, 0, canvas.width, canvas.height);
+                for (var i = 0; i < rows; i++) {
+                    for (var y = 0; y < cols; y++) {
+                        if (gameBox[i][y]) {
+                            c1.fillStyle = gameColor[col(gameBox[i][y])];
+                        } else {
+                            c1.fillStyle = gameColor[0];
+                        }
+                        c1.fillRect(y * size + (y + 1) * size / 10, i * size + (i + 1) * size / 10, size, size);
+                        if (gameBox[i][y]) {
+                            c1.fillStyle = "#000";
+                            c1.textBaseline = "top";
+                            c1.font = size / 2 + "px sans-serif";
+                            c1.fillText(gameBox[i][y], canvas.width * 2, canvas.height * 2);
+                            var obj = c1.measureText(gameBox[i][y]);
+                            c1.fillText(
+                                gameBox[i][y],
+                                y * size + (y + 1) * size / 10 + (size - obj.width) / 2,
+                                i * size + (i + 1) * size / 10 + size / 7
+                            );
+                        }
+                    }
+                }
+            }
+            huihua();
+            // function panduan() {
+            //     var bool2 = true;
+            //     for (var i = 0; i < rows; i++) {
+            //         for (var y = 0; y < cols; y++) {
+            //             if (
+            //                 !gameBox[i][y]||
+            //                 gameBox[i][y]==gameBox[i][y+1]
+            //                 //||gameBox[i][y]==gameBox[i+1][y]
+            //                 ) {
+            //                 bool2 = false;
+            //             }
+            //         }
+            //     }
+            //     if (bool2) {
+            //         alert("游戏结束！");
+            //         into();
+            //     }
+            // }
+        }
+    </script>
+</body>
+
+</html>

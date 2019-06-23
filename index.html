@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表格</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            overflow: auto;
+            height: 600px;
+        }
+
+        .box table {
+            position: relative;
+            
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* .box table input{
+            border:solid 1px #99f;
+        } */
+        .box table td{
+            border-top: 1px solid #666;
+            border-left: 1px solid #666;
+            min-width: 100px;
+            padding: 4px;
+        }
+
+        .box table tbody tr:last-child td {
+            border-bottom: 1px solid #666;
+        }
+
+        .box table tr td:last-child {
+            border-right: 1px solid #666;
+        }
+
+        .box table thead tr td {
+            color: #000;
+            font-weight: 600;
+        }
+
+        #btn{
+            width:100%;
+            height:60px;
+            margin-top:10px;
+            font-size:12px;
+        }
+        #btn div{
+            float: left;
+            padding:0 14px;
+            height:30px;
+            margin-right:5px;
+            line-height: 30px;
+        }
+        #btn .btn{
+            background:#059;
+            color:#fff;
+            text-align:center;
+            cursor: pointer;
+        }
+        #btn .text{
+            color:#059;
+        }
+        #btn .on{
+            background:#ccf;
+            color:#059;
+            border:1px solid #059;
+        }
+        #btn input{
+            float: left;
+            border:1px solid #059;
+            height:30px;
+            margin-right:5px;
+            width:100px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <table cellspacing="0" ellpadding="0">
+            <thead>
+                <tr>
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td>考核单位</td>
+                    <td>标题</td>
+                    <td>被考核单位</td>
+                    <td>节点内容</td>
+                    <td>证明材料</td>
+                    <td>反馈限期日期</td>
+                    <td>报送材料单位</td>
+                    <td>报送材料</td>
+                    <td>县市区完成情况及说明</td>
+                    <td>县市区完成情况</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td rowspan="5">中国人民银行铁岭中心支行</td>
+                    <td rowspan="5">农信信用体系建设</td>
+                    <td rowspan="5">
+                        开原市政府办公室；昌图县政府办公室；西丰县政府办公室；调兵山市政府办公室；铁岭县政府办公室
+                    </td>
+                    <td>
+                        6月30日前，农户信用信息管理系统中录入农户数量，铁岭县30000户，开原市35000户，昌图县100000户，西丰县/调兵山市达到户籍数的50%；农户信用信息管理系统中录入省级以上示范家庭农场、省级以上合作社示范社数量达到50%
+                    </td>
+                    <td>
+                        《铁岭市农户信息信用管理系统》中数据
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        开原市政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，农户信用信息管理系统中录入农户数量，铁岭县30000户，开原市35000户，昌图县100000户，西丰县/调兵山市达到户籍数的50%；农户信用信息管理系统中录入省级以上示范家庭农场、省级以上合作社示范社数量达到50%
+                    </td>
+                    <td>
+                        《铁岭市农户信息信用管理系统》中数据
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        昌图市政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，农户信用信息管理系统中录入农户数量，铁岭县30000户，开原市35000户，昌图县100000户，西丰县/调兵山市达到户籍数的50%；农户信用信息管理系统中录入省级以上示范家庭农场、省级以上合作社示范社数量达到50%
+                    </td>
+                    <td>
+                        《铁岭市农户信息信用管理系统》中数据
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        西丰县政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，农户信用信息管理系统中录入农户数量，铁岭县30000户，开原市35000户，昌图县100000户，西丰县/调兵山市达到户籍数的50%；农户信用信息管理系统中录入省级以上示范家庭农场、省级以上合作社示范社数量达到50%
+                    </td>
+                    <td>
+                        《铁岭市农户信息信用管理系统》中数据
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        调兵山市政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，农户信用信息管理系统中录入农户数量，铁岭县30000户，开原市35000户，昌图县100000户，西丰县/调兵山市达到户籍数的50%；农户信用信息管理系统中录入省级以上示范家庭农场、省级以上合作社示范社数量达到50%
+                    </td>
+                    <td>
+                        《铁岭市农户信息信用管理系统》中数据
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        铁岭县政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td rowspan="5">市气象局</td>
+                    <td rowspan="5">爆炸和火灾危险场所防雷检测覆盖率和隐患整改到位率</td>
+                    <td rowspan="5">
+                        开原市政府办公室；昌图县政府办公室；西丰县政府办公室；调兵山市政府办公室；铁岭县政府办公室
+                    </td>
+                    <td>
+                        6月30日前，爆炸和火灾危险场所防雷装置检测覆盖率达到60%，开展全市范围排雷、人影、施放气球检查两次
+                    </td>
+                    <td>
+                        检查记录、照片
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        开原市政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，爆炸和火灾危险场所防雷装置检测覆盖率达到60%，开展全市范围排雷、人影、施放气球检查两次
+                    </td>
+                    <td>
+                        检查记录、照片
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        昌图县政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，爆炸和火灾危险场所防雷装置检测覆盖率达到60%，开展全市范围排雷、人影、施放气球检查两次
+                    </td>
+                    <td>
+                        检查记录、照片
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        西丰县政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，爆炸和火灾危险场所防雷装置检测覆盖率达到60%，开展全市范围排雷、人影、施放气球检查两次
+                    </td>
+                    <td>
+                        检查记录、照片
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        调兵山市政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>
+                        6月30日前，爆炸和火灾危险场所防雷装置检测覆盖率达到60%，开展全市范围排雷、人影、施放气球检查两次
+                    </td>
+                    <td>
+                        检查记录、照片
+                    </td>
+                    <td>
+                        2019-06-30
+                    </td>
+                    <td>
+                        铁岭县政府办公室
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div id="btn">
+        <div class="btn first">首页</div>
+        <div class="btn top">上一页</div>
+        <div class="btn on">1</div>
+        <div class="btn">2</div>
+        <div class="btn">3</div>
+        <div class="btn">4</div>
+        <div class="btn">5</div>
+        <div class="btn bottom">下一页</div>
+        <div class="btn last">尾页</div>
+        <div class="btn common">20条/页↓</div>
+        <div class="text">跳至</div>
+        <input type="text">
+        <div class="btn">确认</div>
+        <div class="btn">刷新</div>
+        <div class="text">共<span>38</span>页</div>
+        <div class="text">共<span>753</span>条记录</div>
+    </div>
+</body>
+
+</html>
